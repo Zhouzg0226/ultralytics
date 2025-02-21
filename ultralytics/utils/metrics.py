@@ -16,6 +16,8 @@ OKS_SIGMA = (
     / 10.0
 )
 
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
 
 def bbox_ioa(box1, box2, iou=False, eps=1e-7):
     """
@@ -411,7 +413,16 @@ class ConfusionMatrix:
 
         fig, ax = plt.subplots(1, 1, figsize=(12, 9), tight_layout=True)
         nc, nn = self.nc, len(names)  # number of classes, names
-        seaborn.set_theme(font_scale=1.0 if nc < 50 else 0.8)  # for label size
+        # seaborn.set_theme(font_scale=1.0 if nc < 50 else 0.8)  # for label size
+
+        # add, 20250210, zzg
+        ###############################################################
+        # seaborn.set_theme(font_scale=1.0 if nc < 50 else 0.8)  # for label size 注释
+        seaborn.set(font='simhei', font_scale=1.0 if nc < 50 else 0.8)
+        plt.rcParams['font.sans-serif'] = ['simhei']  # 用来正常显示中文标签
+        plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+        ###################################################################
+
         labels = (0 < nn < 99) and (nn == nc)  # apply names to ticklabels
         ticklabels = (list(names) + ["background"]) if labels else "auto"
         with warnings.catch_warnings():
